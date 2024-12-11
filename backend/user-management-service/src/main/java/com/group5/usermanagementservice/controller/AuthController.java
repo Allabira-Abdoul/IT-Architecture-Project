@@ -1,12 +1,13 @@
 package com.group5.usermanagementservice.controller;
 
+import com.group5.usermanagementservice.dto.LoginDto;
+import com.group5.usermanagementservice.dto.UserDto;
+import com.group5.usermanagementservice.dto.TextResponse;
+import com.group5.usermanagementservice.model.User;
+import com.group5.usermanagementservice.service.AuthService;
+import com.group5.usermanagementservice.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,102 +18,59 @@ import java.util.List;
 
 @RestController
 //@CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
-    UserService userService;
+    private AuthService authService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/auth/test")
+    @GetMapping("/test")
     public TextResponse testAuth(HttpServletRequest request) {
         String clientIp = request.getRemoteAddr();
         return new TextResponse("Client IP Address: " + clientIp);
     }
 
-    @PostMapping("/auth/login")
-    public TextResponse getToken(@RequestBody LoginDTO authRequest) {
-        User user = userService.findByEmail(authRequest.getEmail());
-        if(user.getRole() == UserRole.DELETED) {
-            throw new RuntimeException("User Deleted");
+    @PostMapping("/login")
+    public TextResponse getToken(@RequestBody LoginDto authRequest) {
+        UserDto user = userService.findByEmail(authRequest.email());
+        if(user == null) {
+            throw new RuntimeException("User Doesn't exist");
         }
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password()));
         if (authenticate.isAuthenticated()) {
-            return new TextResponse(userService.generateToken(authRequest.getEmail()));
+            return authService.generateToken(authRequest.email());
         } else {
             throw new RuntimeException("invalid access");
         }
     }
 
-    @GetMapping("/auth")
-    public User getUserFromToken(@RequestParam("token") String token) {
+    @GetMapping("")
+    public UserDto getUserFromToken(@RequestParam("token") String token) {
 
-        return userService.getUserFromToken(token);
+        return authService.getUserFromToken(token);
 
     }
 
-    @GetMapping("/auth/validate")
+    @GetMapping("/validate")
     public TextResponse validateToken(@RequestParam("token") String token) {
-        userService.validateToken(token);
+        authService.validateToken(token);
         return new TextResponse("Token is valid");
     }
 
 
     @PostMapping("/auth/save")
-    public ResponseEntity<?> saveUser(@RequestPart("file") MultipartFile file, @RequestPart("user") UserDTO userDTO) {
+    public UserDto saveUser(@RequestPart("file") MultipartFile file, @RequestPart("user") UserDto userDTO) throws Exception {
         try {
-            UserDTO savedUser = userService.saveUser(file, userDTO);
-            return ResponseEntity.ok(savedUser);
+            return userService.saveUser(file, userDTO);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            throw new IllegalArgumentException("invalid access");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while saving the user.");
+            throw new Exception("invalid access");
         }
     }
-
-
-
-
-    @GetMapping("/user/test")
-    public TextResponse test() {
-        return new TextResponse("Hello World");
-    }
-
-
-    @PutMapping("/user/update/{id}")
-    public User updateUser(@PathVariable Long id, @RequestPart("file") MultipartFile file, @RequestPart("user") UserDTO userDTO) {
-        return userService.updateUser(id, file, userDTO);
-
-    }
-
-    //@DeleteMapping("/user/delete/{id}")
-    @PutMapping("/user/delete/{id}")
-    public TextResponse deleteUser(@PathVariable Long id) {
-        userService.delete(id);
-        return new TextResponse("User deleted successfully");
-    }
-
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-
-    @GetMapping("/user/all-users")
-    public List<User> getAllUsers() {
-        return userService.allUsers();
-    }
-
-    @PostMapping("/user/save")
-    public ResponseEntity<?> addUser(@RequestPart("file") MultipartFile file, @RequestPart("user") UserDTO userDTO) {
-        try {
-            UserDTO savedUser = userService.saveUser(file, userDTO);
-            return ResponseEntity.ok(savedUser);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while saving the user.");
-        }
-    }
-
 }

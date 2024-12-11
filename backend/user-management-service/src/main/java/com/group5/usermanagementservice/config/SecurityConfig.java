@@ -1,6 +1,6 @@
 package com.group5.usermanagementservice.config;
 
-import group1.iusjcrm.user_management_service.serviceImpl.UserServiceImpl;
+import com.group5.usermanagementservice.service.implementation.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,12 +25,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf().disable()
-//                .authorizeHttpRequests()
-//                //.requestMatchers("/api/**").permitAll()
-//                .anyRequest().permitAll()
-//                .and()
-//                .build();
 
         return http.csrf().disable()
                 .authorizeHttpRequests()
