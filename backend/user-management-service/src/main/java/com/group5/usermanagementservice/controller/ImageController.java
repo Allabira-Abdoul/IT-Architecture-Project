@@ -3,6 +3,8 @@ package com.group5.usermanagementservice.controller;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @RestController
-@RequestMapping("/api/resources")
+@RequestMapping("/api/images")
 @CrossOrigin("*")
 public class ImageController {
 
@@ -41,17 +43,22 @@ public class ImageController {
 
     @GetMapping("/{filename:.+}")
     @ResponseBody
-    public Resource serveFile(@PathVariable String filename) {
+    public ResponseEntity<Resource> serveImageFile(@PathVariable String filename) {
         try {
             Path file = Paths.get(uploadDir).resolve(filename);
             Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
+            if (resource.exists() && resource.isReadable()) {
+                // Set content type to the appropriate image type
+                String contentType = Files.probeContentType(file);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        .body(resource);
             } else {
                 throw new RuntimeException("Could not read file: " + filename);
             }
-        } catch (MalformedURLException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Could not serve file: " + filename, e);
         }
     }
+
 }

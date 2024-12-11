@@ -13,18 +13,18 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router ) { }
 
   logout(){
-    localStorage.removeItem("jwt")
-    //localStorage.removeItem("user")
-    this.router.navigate(['']);
+    localStorage.removeItem("it-architecture-token")
+    localStorage.removeItem("it-architecture-user")
+    this.router.navigate(['/login']);
   }
 
   login(login:Login): Observable<any> {
-    return this.http.post(`${BASE_URL}api/auth/login`, login)
+    return this.http.post<any>(`${BASE_URL}api/auth/login`, login)
   }
 
   // Method to check if user is authenticated
   isAuthenticated(): Observable<boolean> {
-    const token = localStorage.getItem('jwt'); // Or use a more secure storage method
+    const token = localStorage.getItem('it-architecture-token'); // Or use a more secure storage method
 
     if (!token) {
       return of(false);
@@ -35,5 +35,7 @@ export class AuthService {
       catchError(() => of(false))
     );
   }
+
+
 
 }

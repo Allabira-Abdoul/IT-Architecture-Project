@@ -1,1 +1,8 @@
-<p>sidebar works!</p>
+<nav class="sidebar">
+  <ul>
+    <li [class.active]="router.url === '/home'" (click)="router.navigate(['/home'])">Home</li>
+    <li [class.active]="router.url === '/userboard'" (click)="router.navigate(['/userboard'])">About</li>
+    <li [class.active]="router.url === '/profile'" (click)="router.navigate(['/profile'])">Services</li>
+    <li [class.active]="router.url === '/logout'" (click)="logout()">Contact</li>
+  </ul>
+</nav>

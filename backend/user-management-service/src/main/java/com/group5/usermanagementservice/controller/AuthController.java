@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 //@CrossOrigin(origins = "*")
-@RequestMapping("/api/auth")
+@RequestMapping("/api/auths")
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -63,7 +63,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/auth/save")
+    @PostMapping("/save")
     public UserDto saveUser(@RequestPart("file") MultipartFile file, @RequestPart("user") UserDto userDTO) throws Exception {
         try {
             return userService.saveUser(file, userDTO);
