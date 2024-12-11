@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/backend/service-registry/pom.xml" />
         <option value="$PROJECT_DIR$/backend/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/backend/student-registration-service/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/user-management-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

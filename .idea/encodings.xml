@@ -10,6 +10,7 @@
     <file url="file://$PROJECT_DIR$/backend/student-grade-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/student-management-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/backend/student-registration-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/backend/user-management-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/email-notification-service/src/main/java" charset="UTF-8" />
   </component>
 </project>
