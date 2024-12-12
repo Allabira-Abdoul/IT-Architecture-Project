@@ -1,1 +1,28 @@
-<p>user-details works!</p>
+<div class="profile-container">
+  <h2>User Profile</h2>
+
+  <div class="profile-field" *ngFor="let field of profileFields">
+    <label>{{ field.label }}:</label>
+    <div *ngIf="!isEditing">
+      <span>{{ user[field.key] }}</span>
+    </div>
+    <div *ngIf="isEditing">
+      <input
+        [type]="field.type"
+        [(ngModel)]="user[field.key]"
+        [placeholder]="field.label"
+        class="form-control"
+      />
+    </div>
+  </div>
+
+  <div class="profile-actions">
+    <button *ngIf="!isEditing" (click)="toggleEdit()" class="btn btn-primary">
+      Edit
+    </button>
+    <div *ngIf="isEditing">
+      <button (click)="saveChanges()" class="btn btn-success">Save</button>
+      <button (click)="cancelEdit()" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>

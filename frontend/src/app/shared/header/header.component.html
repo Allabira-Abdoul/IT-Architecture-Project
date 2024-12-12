@@ -1,1 +1,14 @@
-<p>header works!</p>
+<div class = "container">
+  <div class = "logo">
+    <img [src]="source + 'Logo.png'" alt="Logo" >
+  </div>
+  <div class = "profile">
+    <div class = "notification"></div>
+    <div class = "profile-image">
+      <img [src]="source + user.imageUrl" alt="{{ user.fullName }}" class="card-img">
+    </div>
+    <div class = "profile-name">
+      <p>{{user.fullName}}</p>
+    </div>
+  </div>
+</div>

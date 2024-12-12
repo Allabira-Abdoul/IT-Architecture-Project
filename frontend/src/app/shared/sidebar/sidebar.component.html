@@ -1,7 +1,17 @@
-<nav class="sidebar">
+<!--<nav class="sidebar">
   <ul>
     <li [class.active]="router.url === '/home'" (click)="router.navigate(['/home'])">Home</li>
-    <li [class.active]="router.url === '/userboard'" (click)="router.navigate(['/userboard'])">Userboard</li>
+   @if(user.role === 'ADMIN'){ <li [class.active]="router.url === '/userboard'" (click)="router.navigate(['/userboard'])">Userboard</li>}
+    <li [class.active]="router.url === '/profile'" (click)="router.navigate(['/profile'])">Profile</li>
+    <li [class.active]="router.url === '/logout'" (click)="logout()">Logout</li>
+  </ul>
+</nav>-->
+
+<nav class="sidebar-navigation">
+  <ul>
+
+    <li [class.active]="router.url === '/home'" (click)="router.navigate(['/home'])">Home</li>
+    @if(user.role === 'ADMIN'){ <li [class.active]="router.url === '/userboard'" (click)="router.navigate(['/userboard'])">Userboard</li>}
     <li [class.active]="router.url === '/profile'" (click)="router.navigate(['/profile'])">Profile</li>
     <li [class.active]="router.url === '/logout'" (click)="logout()">Logout</li>
   </ul>
