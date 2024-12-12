@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   login(login:Login): Observable<any> {
-    return this.http.post<any>(`${BASE_URL}api/auth/login`, login)
+    return this.http.post<any>(`${BASE_URL}api/auths/login`, login)
   }
 
   // Method to check if user is authenticated
@@ -30,7 +30,7 @@ export class AuthService {
       return of(false);
     }
 
-    return this.http.get(`${BASE_URL}api/auth/validate?token=${token}`).pipe(
+    return this.http.get(`${BASE_URL}api/auths/validate?token=${token}`).pipe(
       map(() => true),
       catchError(() => of(false))
     );

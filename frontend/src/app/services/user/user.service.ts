@@ -16,7 +16,7 @@ export class UserService {
     formData.append('file', file);
     formData.append('user', new Blob([JSON.stringify(userDTO)], { type: 'application/json' }));
 
-    return this.http.post(BASE_URL + 'api/user/save', formData, {
+    return this.http.post(BASE_URL + 'api/users/save', formData, {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }
@@ -26,35 +26,35 @@ export class UserService {
     formData.append('file', file);
     formData.append('user', new Blob([JSON.stringify(userDTO)], { type: 'application/json' }));
 
-    return this.http.put(BASE_URL + 'api/user/update/' + userDTO.id, formData, {
+    return this.http.put(BASE_URL + 'api/users/update/' + userDTO.id, formData, {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }
 
   getUser(id: number): Observable<any> {
-    return this.http.get(BASE_URL + 'api/user/' + id, {
+    return this.http.get(BASE_URL + 'api/users/' + id, {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }
 
   getByToken(token:string): Observable<any>{
-    return this.http.get(BASE_URL + 'api/auth?token='+ token).pipe(catchError(this.handleError));
+    return this.http.get(BASE_URL + 'api/auths?token='+ token).pipe(catchError(this.handleError));
   }
 
   getUsers(): Observable<any> {
-    return this.http.get(BASE_URL + 'api/user/all-users', {
+    return this.http.get(BASE_URL + 'api/users/all-users', {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.put(BASE_URL + 'api/user/delete/' + id, null, {
+    return this.http.put(BASE_URL + 'api/users/delete/' + id, null, {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }
 
   private createAuthorizationHeader(): HttpHeaders {
-    const jwtToken = localStorage.getItem('jwt');
+    const jwtToken = localStorage.getItem('it-architecture-token');
     let headers = new HttpHeaders();
 
     if (jwtToken) {

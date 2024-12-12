@@ -46,21 +46,21 @@ export class LoginComponent {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
       }
-      this.authService.login(this.loginForm.value).subscribe(
+      this.authService.login(this.login).subscribe(
         (response) => {
           if (response.text !== 'invalid access'){
             // alert("hello"+ response.text);
             const  jwtToken = response.text;
 
-            localStorage.setItem('jwt',jwtToken)
+            localStorage.setItem('it-architecture-token',jwtToken)
             this.userService.getByToken(jwtToken).subscribe(
               (response ) => {
                 const user = response
-                localStorage.setItem('user',JSON.stringify(user))
+                localStorage.setItem('it-architecture-user',JSON.stringify(user))
 
               }
             )
-            this.router.navigate(['/uSerboard']);
+            this.router.navigate(['/home']);
 
           } else {
             this.errorMessage = 'Invalid credentials, please try again';
