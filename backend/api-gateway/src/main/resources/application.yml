@@ -25,19 +25,19 @@ spring:
       routes:
         - id: USER-AUTH-SERVICE
           uri: lb://USER-MANAGEMENT-SERVICE
-#          uri: http://localhost:8081
+#          uri: http://localhost:8110
           predicates:
             - Path=/api/auths/**
 
         - id: USER-IMAGE-SERVICE
           uri: lb://USER-MANAGEMENT-SERVICE
-#          uri: http://localhost:8081
+#          uri: http://localhost:8110
           predicates:
           - Path=/api/images/**
 
         - id: STUDENT-MANAGEMENT-SERVICE
           uri: lb://STUDENT-MANAGEMENT-SERVICE
-#          uri: http://localhost:8081
+#          uri: http://localhost:8110
           predicates:
             - Path=/api/students/**
           filters:
