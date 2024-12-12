@@ -33,7 +33,6 @@ export class LoginComponent {
                private authService : AuthService,
                private userService : UserService,
                private fb: FormBuilder,
-               private dialogRef: MatDialogRef<LoginComponent>
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],

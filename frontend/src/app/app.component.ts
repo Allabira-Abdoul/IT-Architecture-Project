@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {SidebarComponent} from './shared/sidebar/sidebar.component';
 import {HeaderComponent} from './shared/header/header.component';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent, HeaderComponent],
+  imports: [RouterOutlet, SidebarComponent, HeaderComponent, CommonModule],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.css'
