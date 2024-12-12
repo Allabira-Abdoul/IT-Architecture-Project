@@ -1,0 +1,129 @@
+
+<div class="body">
+<!-- Main Content -->
+<main class="main-container">
+  <div class="controls">
+    <!-- Search Input -->
+    <div class="search">
+      <input type="text" [(ngModel)]="searchInput" placeholder="Search..." />
+    </div>
+
+    <!-- Filter Options -->
+    <div class="filters">
+      <select [(ngModel)]="filterColumn">
+        <option value="">All</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+        <option value="class">Class</option>
+        <option value="gender">Gender</option>
+        <option value="contact">Contact</option>
+      </select>
+      <input type="text" [(ngModel)]="filterValue" placeholder="Filter Value" />
+    </div>
+
+    <!-- Buttons -->
+    <button class="btn-create" (click)="openCreateStudentModal()">Create New Student</button>
+    <div class="table-actions">
+      <button class="btn-action" (click)="toggleActionsMenu()">
+        <i class="fa fa-bars"></i>
+      </button>
+      <!-- <ul *ngIf="isActionsMenuVisible" class="table-actions-menu">
+        <li><a href="#" (click)="editStudent()">Edit</a></li>
+        <li><a href="#" (click)="deleteStudent()">Delete</a></li>
+        <li><a href="#" (click)="viewDetails()">View Details</a></li>
+      </ul> -->
+    </div>
+
+    <div class="export-import">
+      <button class="btn" (click)="exportStudents()">Export</button>
+      <button class="btn" (click)="importStudents($event)">Import</button>
+      <button class="btn" type="file" (click)="importStudents($event)" accept=".csv" ></button>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" (change)="selectAllStudents($event)" /></th>
+          <th>Roll No</th>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Class</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of filteredStudents">
+          
+          <td><input type="checkbox" [(ngModel)]="student.selected" /></td>
+          <td>{{ student.rollNo }}</td>
+          <td>{{ student.studentID }}</td>
+          <td>{{ student.firstName }} {{ student.lastName }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.class }}</td>
+          <td>
+            <button (click)="editStudent(student)">Edit</button>
+            <button (click)="deleteStudent(student)">Delete</button>
+            <button *ngFor="let student of students" (click)="viewDetails(student)">View Details</button>          
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal Section -->
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Create New Student</h2>
+      <form #studentForm="ngForm" (ngSubmit)="createStudent()">
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" [(ngModel)]="newStudent.firstName" required />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" [(ngModel)]="newStudent.lastName" required />
+        </div>
+        <div class="form-group">
+          <label for="student_id">Student ID:</label>
+          <input type="text" id="student_id" name="studentID" [(ngModel)]="newStudent.studentID" required />
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact:</label>
+          <input type="tel" id="contact" name="contact" [(ngModel)]="newStudent.contact" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" [(ngModel)]="newStudent.email" required />
+        </div>
+        <div class="form-group">
+          <label for="dateOfBirth">Date of Birth:</label>
+          <input type="date" id="dateOfBirth" name="dob" [(ngModel)]="newStudent.dob" />
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender" [(ngModel)]="newStudent.gender" required>
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+          <label for="class">Class:</label>
+          <select id="class" name="class" [(ngModel)]="newStudent.class" required>
+            <option value="INGE 5ISI EN">INGE 5ISI EN</option>
+            <option value="INGE 5ISI FR">INGE 5ISI FR</option>
+            <option value="INGE 5SRT FR">INGE 5SRT FR</option>
+            <option value="INGE 4ISI EN">INGE 4ISI EN</option>
+            <option value="INGE 4ISI FR">INGE 4ISI FR</option>
+            <option value="INGE 4SRT FR">INGE 4SRT FR</option>
+            <option value="INGE 3ISI EN">INGE 3ISI EN</option>
+            <option value="INGE 3ISI FR">INGE 3ISI FR</option>
+            <option value="INGE 3SRT FR">INGE 3SRT FR</option>
+          </select>
+        </div>
+        <button type="submit">Create Student</button>
+      </form>
+    </div>
+  </div>
+</main>
+</div>

@@ -1,0 +1,20 @@
+.body {
+  height: 88vh;
+  font-family: 'poppins';
+  background-color: rgba(71, 255, 194, 0);
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.sidebar{
+  width: 17%;
+  height: 100vh;
+
+  background-color: rgba(220, 20, 60, 0);
+}
+.main{
+  width: 83%;
+  height: 90vh;
+  background-color: #f1f8ff;
+  padding: 10px 30px;
+}

@@ -1,0 +1,17 @@
+<div *ngIf="showLayout">
+  <app-header></app-header>
+  <div class="body">
+    <div class="sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="main">
+      <router-outlet></router-outlet>
+
+    </div>
+  </div>
+</div>
+
+<!-- Show only the router outlet on the login and personal-info pages -->
+<div *ngIf="!showLayout">
+  <router-outlet></router-outlet>
+</div>
