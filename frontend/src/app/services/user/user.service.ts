@@ -48,7 +48,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.put(BASE_URL + 'api/users/delete/' + id, null, {
+    return this.http.delete(BASE_URL + 'api/users/delete/' + id, {
       headers: this.createAuthorizationHeader()
     }).pipe(catchError(this.handleError));
   }

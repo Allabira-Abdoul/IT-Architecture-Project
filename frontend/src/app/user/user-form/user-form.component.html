@@ -17,13 +17,13 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Image</mat-label>
-      <input matInput type="file" (change)="onFileSelected($event)" formControlName="imageUrl">
+      <mat-label>Upload File</mat-label>
+      <mat-file-input (change)="onFileSelected($event)"></mat-file-input>
     </mat-form-field>
 
     <div mat-dialog-actions>
       <button mat-button type="button" (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Save</button>
     </div>
   </form>
 </mat-dialog-content>

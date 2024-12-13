@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../models/user/user';
 import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
   selector: 'app-user-details',
   imports: [
-    FormsModule
+    FormsModule,
+    CommonModule,
   ],
   templateUrl: './user-details.component.html',
   standalone: true,
@@ -14,10 +17,15 @@ import {FormsModule} from '@angular/forms';
 export class UserDetailsComponent implements OnInit {
   isEditing: boolean = false;
   user!:User
+  originalUser!: User
+
+  constructor(private userService: UserService) {
+    this.user = JSON.parse(localStorage.getItem('it-architecture-user') ?? '{}');
+    this.originalUser = { ...this.user };
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('it-architecture-user') ?? '{}');
-
   }
 
   profileFields: { key: keyof User; label: string; type: string }[] = [
@@ -28,7 +36,6 @@ export class UserDetailsComponent implements OnInit {
   ];
 
 
-  originalUser = { ...this.user };
 
   toggleEdit(): void {
     this.isEditing = true;
@@ -36,6 +43,7 @@ export class UserDetailsComponent implements OnInit {
 
   saveChanges(): void {
     this.isEditing = false;
+    localStorage.setItem('it-architecture-user', JSON.stringify(this.user))
     alert('Changes saved successfully!');
   }
 

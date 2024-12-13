@@ -58,7 +58,10 @@ source="http://localhost:8080/api/images/"
   }
 
   updateUser(user: User) {
-    const dialogRef = this.dialog.open(UserFormComponent, {data: {user}});
+    const dialogRef = this.dialog.open(UserFormComponent, {
+      width: '400px',
+      data: {user}
+    });
     dialogRef.afterClosed().subscribe(updatedUser => {
       if (updatedUser) {
         this.userService.updateUser(updatedUser, updatedUser.imageUrl) // Pass the file as well
@@ -82,12 +85,15 @@ source="http://localhost:8080/api/images/"
   }
 
   createUser() {
-    const dialogRef = this.dialog.open(UserFormComponent);
+    const dialogRef = this.dialog.open(UserFormComponent, {
+      width: '400px',
+      data: {}
+    });
     dialogRef.afterClosed().subscribe(newUser => {
       if (newUser) {
         this.userService.addUser(newUser, newUser.imageUrl) // Pass the file as well
           .subscribe(createdUser => {
-            this.users.push(createdUser);
+            this.fetchUsers();
           });
       }
     });
